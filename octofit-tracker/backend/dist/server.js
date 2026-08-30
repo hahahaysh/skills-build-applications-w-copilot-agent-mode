@@ -4,10 +4,13 @@ import './config/database.js';
 import { Activity, LeaderboardEntry, Team, User, Workout } from './models/index.js';
 const app = express();
 const PORT = Number(process.env.PORT) || 8000;
-const codespaceName = process.env.CODESPACE_NAME;
-const apiBaseUrl = codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : `http://localhost:${PORT}`;
+function getApiBaseUrl() {
+    const codespaceName = process.env.CODESPACE_NAME;
+    return codespaceName
+        ? `https://${codespaceName}-8000.app.github.dev`
+        : `http://localhost:${PORT}`;
+}
+const apiBaseUrl = getApiBaseUrl();
 app.use(express.json());
 async function fetchCollectionData() {
     const [users, teams, activities, leaderboard, workouts] = await Promise.all([
