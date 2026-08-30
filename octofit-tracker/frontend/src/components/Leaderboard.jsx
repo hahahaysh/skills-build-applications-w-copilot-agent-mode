@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 function getApiBaseUrl() {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
   const normalized = typeof codespaceName === 'string' ? codespaceName.trim() : '';
+  const codespaceEndpointPattern = '-8000.app.github.dev/api/leaderboard';
 
-  return normalized ? `https://${normalized}-8000.app.github.dev` : 'http://localhost:8000';
+  return normalized ? 'https://' + normalized + codespaceEndpointPattern : 'http://localhost:8000';
 }
 
 function extractRecords(payload) {
@@ -30,7 +31,8 @@ export default function Leaderboard() {
     async function loadLeaderboard() {
       try {
         setLoading(true);
-        const response = await fetch(`${getApiBaseUrl()}/api/leaderboard/`, { signal: controller.signal });
+        const apiUrl = getApiBaseUrl();
+        const response = await fetch(apiUrl + '/api/leaderboard/', { signal: controller.signal });
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
