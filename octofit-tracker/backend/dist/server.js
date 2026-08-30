@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import './config/database.js';
@@ -11,6 +12,10 @@ function getApiBaseUrl() {
         : `http://localhost:${PORT}`;
 }
 const apiBaseUrl = getApiBaseUrl();
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 app.use(express.json());
 async function fetchCollectionData() {
     const [users, teams, activities, leaderboard, workouts] = await Promise.all([

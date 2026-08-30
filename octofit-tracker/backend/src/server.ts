@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import './config/database.js';
@@ -16,6 +17,10 @@ function getApiBaseUrl() {
 
 const apiBaseUrl = getApiBaseUrl();
 
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json());
 
 async function fetchCollectionData() {
