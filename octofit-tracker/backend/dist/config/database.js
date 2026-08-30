@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 const db = mongoose.connection;
+mongoose.set('strictQuery', true);
 mongoose
     .connect(connectionString)
     .then(() => {
